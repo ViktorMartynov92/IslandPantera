@@ -1,8 +1,8 @@
 package com.javarush.island.martynov.model;
 
 import com.javarush.island.martynov.model.animal.Animal;
-import com.javarush.island.martynov.model.animal.Carnivore;
-import com.javarush.island.martynov.model.animal.Herbivore;
+import com.javarush.island.martynov.model.animal.carnivore.Carnivore;
+import com.javarush.island.martynov.model.animal.herbviore.Herbivore;
 import java.util.ArrayList;
 import java.util.List;
 

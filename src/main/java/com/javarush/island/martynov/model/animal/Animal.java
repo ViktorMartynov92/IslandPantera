@@ -8,6 +8,10 @@ public abstract class Animal {
     protected boolean hasBred = false;
     protected int weight;
 
+    public int getWeight() {
+        return weight;
+    }
+
     public Animal() {
         this.position = new Position(
                 SimulationConfig.RANDOM.nextInt(SimulationConfig.ISLAND_SIZE),
