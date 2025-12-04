@@ -5,7 +5,6 @@ import com.javarush.island.martynov.config.SimulationConfig;
 import com.javarush.island.martynov.model.Field;
 import com.javarush.island.martynov.model.Position;
 import com.javarush.island.martynov.model.animal.Animal;
-
 import java.util.ArrayList;
 
 public class Herbivore extends Animal {

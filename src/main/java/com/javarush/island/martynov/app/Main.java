@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-
 public class Main {
     // Сделано public static для доступа из классов Animal
     public static final Field[][] island = new Field[SimulationConfig.ISLAND_SIZE][SimulationConfig.ISLAND_SIZE];
