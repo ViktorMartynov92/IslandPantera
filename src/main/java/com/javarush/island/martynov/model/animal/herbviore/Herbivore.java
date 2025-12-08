@@ -1,6 +1,6 @@
 package com.javarush.island.martynov.model.animal.herbviore;
 
-import com.javarush.island.martynov.app.Main;
+import com.javarush.island.martynov.app.Island;
 import com.javarush.island.martynov.config.SimulationConfig;
 import com.javarush.island.martynov.model.Field;
 import com.javarush.island.martynov.model.Position;
@@ -15,7 +15,7 @@ public class Herbivore extends Animal {
     @Override
     public void move() {
         // Используем Main.island, чтобы сохранить оригинальную логику прямого доступа
-        Field[][] island = Main.island;
+        Field[][] island = Island.island;
 
         Position currentPosition = this.position;
         ArrayList<Position> validMoves = new ArrayList<>();
@@ -46,7 +46,7 @@ public class Herbivore extends Animal {
 
     @Override
     public void eat() {
-        Field currentField = Main.island[this.position.x][this.position.y];
+        Field currentField = Island.island[this.position.x][this.position.y];
         if (currentField.getGrass().getHeight() > 0) {
             currentField.getGrass().decrementHeight();
             this.weight = Math.min(SimulationConfig.HERBIVORE_WEIGHT, (int) (this.weight * 1.1));
@@ -64,7 +64,7 @@ public class Herbivore extends Animal {
     @Override
     public void breed() {
         new Thread(() -> {
-            Field currentField = Main.island[this.position.x][this.position.y];
+            Field currentField = Island.island[this.position.x][this.position.y];
             synchronized (currentField) {
                 if (this.hasBred) {
                     return;

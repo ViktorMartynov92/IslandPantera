@@ -7,48 +7,12 @@ import com.javarush.island.martynov.model.animal.carnivore.Carnivore;
 import com.javarush.island.martynov.model.animal.herbviore.Herbivore;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
-public class Main {
+public class Island {
     // Сделано public static для доступа из классов Animal
     public static final Field[][] island = new Field[SimulationConfig.ISLAND_SIZE][SimulationConfig.ISLAND_SIZE];
 
-    public static void main(String[] args) {
-
-        SimulationConfig.EXECUTOR.execute(() -> {
-            // Создаем пустой остров
-            initializeIsland();
-            // Населяем остров животными
-            createAnimals();
-            System.out.println("--- Initial Island State ---");
-            printIsland();
-        });
-
-        System.out.println("Iteration started");
-
-        for (int i = 0; i < 3; i++) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            SimulationConfig.EXECUTOR.execute(() -> {
-                // Сбрасываем статус hasBred
-                resetAnimalStates();
-
-                CompletableFuture<Void> moveFuture = CompletableFuture.runAsync(Main::moveAllAnimals, SimulationConfig.EXECUTOR);
-                CompletableFuture<Void> growFuture = CompletableFuture.runAsync(Main::growGrass, SimulationConfig.EXECUTOR);
-
-                CompletableFuture.allOf(moveFuture, growFuture).thenRunAsync(() -> {
-                    performEatingPhase();
-                    performBreedingPhase();
-                    printIsland();
-                }, SimulationConfig.EXECUTOR);
-            });
-        }
-    }
-
-    private static void initializeIsland() {
+    static void initializeIsland() {
         for (int i = 0; i < SimulationConfig.ISLAND_SIZE; i++) {
             for (int j = 0; j < SimulationConfig.ISLAND_SIZE; j++) {
                 island[i][j] = new Field();
@@ -56,7 +20,7 @@ public class Main {
         }
     }
 
-    private static void resetAnimalStates() {
+    static void resetAnimalStates() {
         for (int i = 0; i < SimulationConfig.ISLAND_SIZE; i++) {
             for (int j = 0; j < SimulationConfig.ISLAND_SIZE; j++) {
                 for (Animal animal : island[i][j].getAnimals()) {
@@ -66,7 +30,7 @@ public class Main {
         }
     }
 
-    private static void createAnimals() {
+    static void createAnimals() {
         // Создаем животных и ставим их в случайные ячейки
         Carnivore carnivore1 = new Carnivore();
         island[carnivore1.position.x][carnivore1.position.y].addAnimal(carnivore1);
@@ -81,7 +45,7 @@ public class Main {
         island[herbivore2.position.x][herbivore2.position.y].addAnimal(herbivore2);
     }
 
-    private static void moveAllAnimals() {
+    static void moveAllAnimals() {
         List<Animal> animalsToMove = new ArrayList<>();
         for (int i = 0; i < SimulationConfig.ISLAND_SIZE; i++) {
             for (int j = 0; j < SimulationConfig.ISLAND_SIZE; j++) {
@@ -94,7 +58,7 @@ public class Main {
         }
     }
 
-    private static void performEatingPhase() {
+    static void performEatingPhase() {
         List<Animal> allAnimals = new ArrayList<>();
         for (int i = 0; i < SimulationConfig.ISLAND_SIZE; i++) {
             for (int j = 0; j < SimulationConfig.ISLAND_SIZE; j++) {
@@ -109,7 +73,7 @@ public class Main {
         }
     }
 
-    private static void performBreedingPhase() {
+    static void performBreedingPhase() {
         List<Animal> animalsToBreed = new ArrayList<>();
         for (int i = 0; i < SimulationConfig.ISLAND_SIZE; i++) {
             for (int j = 0; j < SimulationConfig.ISLAND_SIZE; j++) {
@@ -124,7 +88,7 @@ public class Main {
         }
     }
 
-    private static void growGrass() {
+    static void growGrass() {
         for (int i = 0; i < SimulationConfig.ISLAND_SIZE; i++) {
             for (int j = 0; j < SimulationConfig.ISLAND_SIZE; j++) {
                 island[i][j].getGrass().incrementHeight();
@@ -132,7 +96,7 @@ public class Main {
         }
     }
 
-    private static void printIsland() {
+    static void printIsland() {
         System.out.println("--- Island View ---");
         StringBuilder islandMap = new StringBuilder();
         for (int i = 0; i < SimulationConfig.ISLAND_SIZE; i++) {
