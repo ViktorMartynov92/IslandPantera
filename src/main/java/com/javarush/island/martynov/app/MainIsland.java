@@ -8,7 +8,7 @@ import com.javarush.island.martynov.model.animal.herbviore.Herbivore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Island {
+public class MainIsland {
     // Сделано public static для доступа из классов Animal
     public static final Field[][] island = new Field[SimulationConfig.ISLAND_SIZE][SimulationConfig.ISLAND_SIZE];
 

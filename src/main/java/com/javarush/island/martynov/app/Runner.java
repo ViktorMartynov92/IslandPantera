@@ -4,7 +4,7 @@ import com.javarush.island.martynov.config.SimulationConfig;
 
 import java.util.concurrent.CompletableFuture;
 
-import static com.javarush.island.martynov.app.Island.*;
+import static com.javarush.island.martynov.app.MainIsland.*;
 
 public class Runner {
     public static void main(String[] args) {
@@ -29,8 +29,8 @@ public class Runner {
                 // Сбрасываем статус hasBred
                 resetAnimalStates();
 
-                CompletableFuture<Void> moveFuture = CompletableFuture.runAsync(Island::moveAllAnimals, SimulationConfig.EXECUTOR);
-                CompletableFuture<Void> growFuture = CompletableFuture.runAsync(Island::growGrass, SimulationConfig.EXECUTOR);
+                CompletableFuture<Void> moveFuture = CompletableFuture.runAsync(MainIsland::moveAllAnimals, SimulationConfig.EXECUTOR);
+                CompletableFuture<Void> growFuture = CompletableFuture.runAsync(MainIsland::growGrass, SimulationConfig.EXECUTOR);
 
                 CompletableFuture.allOf(moveFuture, growFuture).thenRunAsync(() -> {
                     performEatingPhase();
